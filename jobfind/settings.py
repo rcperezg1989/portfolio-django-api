@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*6!8w2d*n%(@cuv)gsvc!fy7)+@o&%g%_4%wgz(jygai!nuyc)'
+SECRET_KEY = os.getenv('SECRET_KEY',"")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEJANGO_DEBUG',False)
 
 ALLOWED_HOSTS = []
 
@@ -75,8 +76,12 @@ WSGI_APPLICATION = 'jobfind.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_SYS_NAME',"name does not exist"),
+        'USER': os.getenv('DB_SYS_USER',"name does not exist"),
+        'PASSWORD': os.getenv('DB_SYS_PASSWORD',"password does not exist"),
+        'HOST': os.getenv('DB_SYS_HOST',"host does not exist"),
+        'PORT': '5432',
     }
 }
 
